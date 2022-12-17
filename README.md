@@ -19,7 +19,7 @@ This module provide a full REST API wich contains all the monkey radio public da
 * Create config files (from example file)
 
   ```
-  cp config/dbConfig.mjs.example config/dbConfig.mjs
+  cp config/config.mjs.example config/config.mjs
   ```
 
   And fill it with your personal specs
