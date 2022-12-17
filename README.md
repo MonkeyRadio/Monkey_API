@@ -2,7 +2,7 @@
 
 [www.monkeyradio.fr](https://www.monkeyradio.fr) public module
 
-~~In production at : [api.monkeyradio.fr/v2](https://api.monkeyradio.fr/v2))~~ (not yet)
+~~In production at : [api.monkeyradio.fr/global](https://api.monkeyradio.fr/global))~~ (not yet)
 
 ---
 
