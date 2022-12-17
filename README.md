@@ -10,7 +10,6 @@ This module provide a full REST API wich contains all the monkey radio public da
 
 ### INSTALL
 
-
 * Clone this repo in any directory
 * Install all npm modules
 
@@ -26,8 +25,6 @@ cp config/dbConfig.mjs.example config/dbConfig.mjs
     And fill it with your personal specs
 
 ### DEPLOY
-
----
 
 You have 2 choices to deploy this app :
 
