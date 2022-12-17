@@ -32,7 +32,3 @@ You have 2 choices to deploy this app :
 * Basic method with **systemd**
 
 ---
-
-
-
----
