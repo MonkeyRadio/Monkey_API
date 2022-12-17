@@ -1,8 +1,8 @@
 # Monkey Radio Global API
 
-[monkeyradio.fr](monkeyradio.fr) private module
+[www.monkeyradio.fr](https://www.monkeyradio.fr) public module
 
-In production at : [api.monkeyradio.fr](api.monkeyradio.fr)
+~~In production at : [api.monkeyradio.fr/v2](https://api.monkeyradio.fr/v2))~~ (not yet)
 
 ---
 
