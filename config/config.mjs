@@ -4,17 +4,12 @@
 // Description: CONFIG file
 // ----------------------------------------------
 
+import db from "./dbConfig.mjs";
+
 const config = {
     port: 8080,
     host: "0.0.0.0",
-    db: {
-        type: "mysql",
-        host: "localhost",
-        port: 27017,
-        name: "monkeyradio",
-        user: "monkeyradio",
-        pass: "monkeyradio"
-    },
+    db : db,
     api: {
         version: "v2",
         prefix: "/api",

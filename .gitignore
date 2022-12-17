@@ -1,3 +1,6 @@
+# Config files
+*dbConfig.mjs
+
 # Logs
 logs
 *.log
