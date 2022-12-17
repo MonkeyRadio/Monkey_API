@@ -5,7 +5,7 @@
 // ----------------------------------------------
 
 const config = {
-    port : 8080,
+    port : 8081,
     host : "0.0.0.0",
     db : {
         type: "mysql",
@@ -20,13 +20,17 @@ const config = {
         prefix: "/api",
         name: "Monkey Radio API",
         description: "Monkey Radio API"
-    }
+    },
+    APIModules: [
+        {name : "ping", path : "ping.mjs", description : "Ping API", requireAUTH : false},
+    ]
 };
 
-const callback = {
+const callbacks = {
     onListen: () => {
         console.log(`Listening on ${config.host}:${config.port}`);
     }
 };
 
-export default { config, callback };
+export default config;
+export { config, callbacks };

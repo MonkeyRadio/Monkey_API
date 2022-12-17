@@ -5,4 +5,11 @@
 // ----------------------------------------------
 
 // Importing modules
-import app from './src/server.mjs'
+import {listen} from './src/server.mjs'
+import {routes, setRoutes} from './src/router.mjs'
+
+// Setting routes
+setRoutes();
+
+// Starting server
+listen();

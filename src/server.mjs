@@ -5,10 +5,13 @@
 // ----------------------------------------------
 
 import Express from 'express';
-import config from '../config/config.mjs';
+import {config, callbacks} from '../config/config.mjs';
 
 const app = Express();
 
-app.listen(config.port, config.host, config.callback.onListen());
+const listen = () => {
+    app.listen(config.port, config.host, callbacks.onListen());
+}
 
 export default app;
+export {listen};
