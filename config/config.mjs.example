@@ -1,19 +1,21 @@
-// ----------------------------------------------
-// Monkey Radio ORG - 2022
-// Dev by: @nicojqn
-// Description: CONFIG file
-// ----------------------------------------------
+/**========================================================================
+ * ?                                ABOUT
+ * @author         :  @nicojqn
+ * @email          :  contact@nicojqn.fr
+ * @repo           :  Monkey Radio ORG - 2022 - Global API
+ * @createdOn      :  2022-12-19
+ * @description    :  Monkey Global API - Config
+ *========================================================================**/
 
 const config = {
-    port : 8080,
+    port : 8081,
     host : "0.0.0.0",
     db : {
         type: "mysql",
         host: "localhost",
-        port: 27017,
-        name: "monkeyradio",
-        user: "monkeyradio",
-        pass: "monkeyradio"
+        database: "MonkeyGlobalAPI",
+        user: "user",
+        pass: "pass"
     },
     api : {
         version: "v2",
@@ -23,10 +25,18 @@ const config = {
     }
 };
 
-const callback = {
+const callbacks = {
     onListen: () => {
         console.log(`Listening on ${config.host}:${config.port}`);
+    },
+    onDBConnect: () => {
+        console.log(`Connected to database ${config.db.database}`);
+    },
+    onDBError: (error) => {
+        console.log(`Error connecting to database ${config.db.database}`);
+        console.log(error);
     }
 };
 
-export default { config, callback };
+export default config;
+export { config, callbacks };
