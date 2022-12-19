@@ -1,24 +1,29 @@
-// ----------------------------------------------
-// Monkey Radio ORG - 2022
-// Dev by: @nicojqn
-// Description: router
-// ----------------------------------------------
+/**========================================================================
+ * ?                                ABOUT
+ * @author         :  @nicojqn
+ * @email          :  contact@nicojqn.fr
+ * @repo           :  Monkey Radio ORG - 2022 - Global API
+ * @createdOn      :  2022-12-19
+ * @description    :  Express Router
+ *========================================================================**/
 
 import {config} from '../config/config.mjs'
 import app from '../src/server.mjs'
 
 // Importing routes
-
-const routes = {};
+import ping from '../routes/ping.mjs'
+import radioLive from '../routes/radio/live.mjs'
 
 const setRoutes = () => {
-  config.APIModules.forEach((module) => {
-      routes[module.name] = module;
-      eval(`app.use(${module.name});`);
-  });
+  ping();
+  radioLive();
+  
+  route404();
 };
 
-app.use((req, res) => {
+
+const route404 = () => {
+  app.use((req, res) => {
     res.status(404);
     if (req.accepts('json')) {
       res.json({ error: 'Not found' });
@@ -26,6 +31,6 @@ app.use((req, res) => {
     }
     res.type('txt').send('Not found');
 });
+}
 
-export default routes;
-export {setRoutes, routes};
+export default setRoutes;
