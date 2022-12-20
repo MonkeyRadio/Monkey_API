@@ -3,28 +3,21 @@
  * @author         :  @nicojqn
  * @email          :  contact@nicojqn.fr
  * @repo           :  Monkey Radio ORG - 2022 - Global API
- * @createdOn      :  2022-12-19
- * @description    :  Media Model
+ * @createdOn      :  2022-12-20
+ * @description    :  liveContext Model
  *========================================================================**/
 
 import { DataTypes, Model } from 'sequelize';
 
-const mediaInit = (db) => {
-
-    class Media extends Model { }
-
-    Media.init({
+const liveContextInit = (db) => {
+    class liveContext extends Model {}
+    liveContext.init({
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-            allowNull: false,
         },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        type: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -32,17 +25,24 @@ const mediaInit = (db) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        duration: {
-            type: DataTypes.INTEGER,
+        cover: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        tags: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        isPublic: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         }
     }, {
         sequelize: db.seq,
-        modelName: 'Media'
+        modelName: 'liveContext',
     });
 
-    return Media;
-
+    return liveContext;
 };
 
-export default mediaInit;
+export default liveContextInit;

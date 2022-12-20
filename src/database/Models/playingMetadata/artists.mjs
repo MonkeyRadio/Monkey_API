@@ -25,7 +25,7 @@ const artistInit = (db) => {
             allowNull: false,
         },
     }, {
-        sequelize: db,
+        sequelize: db.seq,
         modelName: 'PlayingMetadata_Artist'
     });
 

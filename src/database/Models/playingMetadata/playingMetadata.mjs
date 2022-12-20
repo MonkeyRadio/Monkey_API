@@ -17,10 +17,6 @@ const playingMetadataInit = (db) => {
     models.single = singleInit(db);
     models.artist.hasOne(models.single);
     models.single.belongsTo(models.artist);
-    Object.keys(models).forEach((model) => {
-        console.log(`[DB] Syncing ${model} model...`);
-        models[model].sync();
-    });
     return models;
 };
 

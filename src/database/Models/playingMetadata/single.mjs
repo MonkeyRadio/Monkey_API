@@ -29,7 +29,7 @@ const singleInit = (db) => {
             allowNull: true,
         },
     }, {
-        sequelize: db,
+        sequelize: db.seq,
         modelName: 'PlayingMetadata_Single'
     });
 
