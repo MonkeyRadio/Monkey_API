@@ -1,19 +1,19 @@
-/**------------------------------------------------------------------------
+/**========================================================================
  * ?                                ABOUT
  * @author         :  @nicojqn
  * @email          :  contact@nicojqn.fr
  * @repo           :  Monkey Radio ORG - 2022 - Global API
- * @createdOn      :  2022-12-20
- * @description    :  live Models
- *------------------------------------------------------------------------**/
+ * @createdOn      :  2022-12-19
+ * @description    :  Media Models
+ *========================================================================**/
 
-import liveContextInit from './liveContext.mjs';
-import liveMetadataInit from './liveMetadata.mjs';
+import mediaContextInit from "./mediaContext.mjs";
+import mediaMetadataInit from "./mediaMetadata.mjs";
 
-const liveInit = (db) => {
+const mediaInit = (db) => {
     const arr = {
-        context : liveContextInit(db),
-        metadata : liveMetadataInit(db)
+        context : mediaContextInit(db),
+        metadata : mediaMetadataInit(db)
     };
     arr.context.hasOne(arr.metadata);
     arr.metadata.belongsTo(arr.context);
@@ -24,4 +24,4 @@ const liveInit = (db) => {
     return arr;
 };
 
-export default liveInit;
+export default mediaInit;

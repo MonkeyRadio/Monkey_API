@@ -36,6 +36,10 @@ const liveContextInit = (db) => {
         isPublic: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
+        },
+        hasMetadata: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
         }
     }, {
         sequelize: db.seq,

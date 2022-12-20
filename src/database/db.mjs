@@ -7,7 +7,8 @@
  * @description    :  db init
  *========================================================================**/
 
-import mediaInit from './Models/media.mjs';
+import typesInit from './Models/types.mjs';
+import mediaInit from './Models/media/media.mjs';
 import playingMetadata from './Models/playingMetadata/playingMetadata.mjs';
 import live from './Models/live/live.mjs';
 import dbConnect from './db_connect.mjs';
@@ -29,8 +30,9 @@ const models_sync = (db) => {
 
 const dbInit = async () => {
     db.seq = await dbConnect();
-    db.media = mediaInit(db);
+    db.types = typesInit(db);
     db.playingMetadata = playingMetadata(db);
+    db.media = mediaInit(db);
     db.live = live(db);
     models_sync(db);
     return db;
