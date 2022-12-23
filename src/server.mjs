@@ -39,6 +39,22 @@ app.tools.checkVar = (objArr) => {
     return [response, arrUndefined];
 }
 
+app.tools.objClone = (obj) => {
+    /**======================
+     **  objClone
+     * @param obj : object
+     * @return cloned object
+     * ========================**/
+    let clone = {};
+    for (let i in obj) {
+        if (typeof(obj[i]) == "object" && obj[i] != null)
+            clone[i] = app.tools.objClone(obj[i]);
+        else
+            clone[i] = obj[i];
+    }
+    return clone;
+}
+
 const listen = () => {
     app.listen(config.port, config.host, callbacks.onListen());
 }

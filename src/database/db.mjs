@@ -11,6 +11,7 @@ import typesInit from './Models/types.mjs';
 import mediaInit from './Models/media/media.mjs';
 import playingMetadata from './Models/playingMetadata/playingMetadata.mjs';
 import live from './Models/live/live.mjs';
+import accounts from './Models/accounts/accounts.mjs';
 import dbConnect from './db_connect.mjs';
 
 let db = {};
@@ -34,7 +35,8 @@ const dbInit = async () => {
     db.playingMetadata = playingMetadata(db);
     db.media = mediaInit(db);
     db.live = live(db);
-    models_sync(db);
+    accounts(db);
+    await db.seq.sync();
     return db;
 }
 

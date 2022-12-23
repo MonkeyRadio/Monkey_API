@@ -3,38 +3,33 @@
  * @author         :  @nicojqn
  * @email          :  contact@nicojqn.fr
  * @repo           :  Monkey Radio ORG - 2022 - Global API
- * @createdOn      :  2022-12-19
- * @description    :  playingMetadata Single Model
+ * @createdOn      :  2022-12-23
+ * @description    :  users models
  *========================================================================**/
 
 import { DataTypes, Model } from 'sequelize';
 
-const singleInit = (db) => {
-
-    class Single extends Model { }
-
-    Single.init({
+const users = (db) => {
+    class users extends Model {}
+    users.init({
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-            allowNull: false,
         },
-        name: {
+        username: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        releaseDate: {
-            type: DataTypes.DATEONLY,
-            allowNull: true,
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
     }, {
         sequelize: db.seq,
-        modelName: 'PlayingMetadata_Single'
+        modelName: 'users',
     });
+    return users;
+}
 
-    return Single;
-
-};
-
-export default singleInit;
+export default users;

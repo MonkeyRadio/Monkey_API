@@ -13,10 +13,14 @@ import app from '../src/server.mjs'
 // Importing routes
 import ping from '../routes/ping.mjs'
 import radioLive from '../routes/radio/live.mjs'
+import playingMetadata from '../routes/playingMetadata/playingMetadata.mjs'
+import accounts from '../routes/accounts/accounts.mjs'
 
 const setRoutes = () => {
   ping();
   radioLive();
+  playingMetadata();
+  accounts();
   
   route404();
 };

@@ -22,7 +22,7 @@ const liveMetadataInit = (db) => {
             allowNull: false
         },
         timeStart: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         duration: {
@@ -30,7 +30,7 @@ const liveMetadataInit = (db) => {
             allowNull: false
         },
         timeEnd: {
-            type: DataTypes.DATE,
+            type: DataTypes.INTEGER,
             allowNull: false
         }
     },

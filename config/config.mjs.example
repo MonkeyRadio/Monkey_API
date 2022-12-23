@@ -22,6 +22,9 @@ const config = {
         prefix: "/api",
         name: "Monkey Radio API",
         description: "Monkey Radio API"
+    },
+    jwt : {
+        secret: "secret",
     }
 };
 
