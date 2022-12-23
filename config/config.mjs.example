@@ -25,6 +25,7 @@ const config = {
     },
     jwt : {
         secret: "secret",
+        expiresIn: "1w"
     }
 };
 
