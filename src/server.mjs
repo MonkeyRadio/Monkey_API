@@ -13,7 +13,19 @@ import {config, callbacks} from '../config/config.mjs';
 
 const app = Express();
 
-app.use(multer().array()); 
+app.use((req, res, next) => {
+    multer().array()(req, res, (err) => {
+        if (err) {
+            res.status(400).json({
+                status: "error",
+                message: "Bad request",
+                data: null
+            });
+        } else {
+            next();
+        }
+    });
+});
 app.use(Express.json());
 app.use(Express.urlencoded({extended: false}));
 

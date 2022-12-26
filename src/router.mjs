@@ -15,12 +15,14 @@ import ping from '../routes/ping.mjs'
 import radioLive from '../routes/radio/live.mjs'
 import playingMetadata from '../routes/playingMetadata/playingMetadata.mjs'
 import accounts from '../routes/accounts/accounts.mjs'
+import entitlements from '../routes/accounts/entitlements/entitlements.mjs'
 
 const setRoutes = () => {
   ping();
   radioLive();
   playingMetadata();
   accounts();
+  entitlements();
   
   route404();
 };

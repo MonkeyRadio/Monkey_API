@@ -8,35 +8,15 @@
  *========================================================================**/
 
 import { DataTypes, Model } from 'sequelize';
+import fs from 'fs';
 
 const entitlements = (db) => {
     let arr = {};
     arr.keyEntitlements = usersEntitlements(db);
-    arr.entitlements = entitlementsList(db);
-    arr.entitlements.hasOne(arr.keyEntitlements);
-    arr.keyEntitlements.belongsTo(arr.entitlements);
+    arr.entitlements = entitlementsList();
     db.accounts.usersKeys.hasOne(arr.keyEntitlements);
     arr.keyEntitlements.belongsTo(db.accounts.usersKeys);
     return arr;
-}
-
-const entitlementsList = (db) => {
-    class entitlements extends Model {}
-    entitlements.init({
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
-    }, {
-        sequelize: db.seq,
-        modelName: 'entitlements',
-    });
-    return entitlements;
 }
 
 const usersEntitlements = (db) => {
@@ -46,12 +26,20 @@ const usersEntitlements = (db) => {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-        }
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     }, {
         sequelize: db.seq,
         modelName: 'keyEntitlements',
     });
     return keyEntitlements;
+}
+
+const entitlementsList = () => {
+    return JSON.parse(fs.readFileSync('./src/database/Models/accounts/entitlements.json'));
 }
 
 export default entitlements;

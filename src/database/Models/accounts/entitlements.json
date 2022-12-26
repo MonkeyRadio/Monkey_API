@@ -1,0 +1,26 @@
+{
+    "root": "Root acces to all the Entitlements",
+    "list": "List all the Entitlements",
+    "assign": "Assign an Entitlement to a key",
+    "revoke": "Revoke an Entitlement from a key",
+    "live": {
+        "root": "Root acces to all the Entitlements",
+        "list": "List all the Entitlements",
+        "assign": "Assign an Entitlement to a key",
+        "revoke": "Revoke an Entitlement from a key",
+        "context": {
+            "root": "Root acces to all the Entitlements",
+            "list": "List all the Entitlements",
+            "assign": "Assign an Entitlement to a key",
+            "revoke": "Revoke an Entitlement from a key",
+            "create": "Create a new live Context"
+        },
+        "metadata": {
+            "root": "Root acces to all the Entitlements",
+            "list": "List all the Entitlements",
+            "assign": "Assign an Entitlement to a key",
+            "revoke": "Revoke an Entitlement from a key",
+            "post": "Post a new Metadata to a live Context"
+        }
+    }
+}
