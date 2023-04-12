@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+    networks:
+      - backend
+
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - backend
+    env_file: ./.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: noworry
+      MONGO_INITDB_ROOT_PASSWORD: itsalocalapp
+    command: mongod --auth
+
+  server:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      MONGODB_URI: "mongodb://noworry:itsalocalapp@mongo"
+      REDIS_URI: "redis://redis"
+    volumes:
+      - .:/app
+    ports:
+      - $PORT:$PORT
+      - 9229:9229
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - backend
+    command: npm run dev
+
+networks:
+  backend:
+
+volumes:
+  mongodb:
+  redis:
