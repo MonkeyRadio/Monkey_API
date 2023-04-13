@@ -32,6 +32,7 @@ services:
     environment:
       MONGODB_URI: "mongodb://noworry:itsalocalapp@mongo"
       REDIS_URI: "redis://redis"
+      ROUTE_SRC: "./src/routes/"
     volumes:
       - .:/app
     ports:
