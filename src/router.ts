@@ -7,9 +7,9 @@ export default async function init_routes(app: Express): Promise<void> {
     console.log("Loading routes...");
     routes = [];
     const get_files = async (fld: string) => {
-        let dir = await fs.promises.readdir("./dist/routes/" + fld);
+        let dir = await fs.promises.readdir(process.env.ROUTE_SRC + fld);
         for (let dirO of dir) {
-            if ((await (fs.promises.lstat("./dist/routes/" + fld + dirO))).isDirectory()) {
+            if ((await (fs.promises.lstat(process.env.ROUTE_SRC + fld + dirO))).isDirectory()) {
                 routes.push(fld + dirO);
             }
         }
