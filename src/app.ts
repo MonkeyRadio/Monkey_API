@@ -5,13 +5,14 @@ import requiredEnv from './requiredEnv.json' assert {
     type: "json"
 };
 import init_routes from './router.js';
+import defaultAdmin from './controllers/auth/defineAdmin.js';
 
 dotenv.config();
 
 const app = express();
 
 const port: number = parseInt(process.env.PORT!) || 3000;
-const host: string = process.env.HOST || 'localhost';
+const host: string = process.env.HOST || '0.0.0.0';
 const proxyLevel: number = parseInt(process.env.PROXY_LEVEL!) || 0;
 
 function check_env_vars(): boolean {
@@ -46,6 +47,7 @@ async function start(): Promise<void> {
     app.listen(port, host, async () => {
         await init_routes(app);
         console.log(`Server is running on http://${host}:${port}`);
+        defaultAdmin();
     });
 }
 
