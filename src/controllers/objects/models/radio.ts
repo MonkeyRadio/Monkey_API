@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
-export type Live = {
-    uid: string,
-    title: string,
-    description: string
+export type Variant = {
+    slug: string,
+    name: string,
+    icon: string
 }
 
 export type Radio = {
     slug: string,
     name: string,
     icon: string,
-    live: Array<Live> | undefined
+    variants: Array<Variant> | undefined
 }
 
 const schema = new mongoose.Schema<Radio>({
@@ -27,8 +27,8 @@ const schema = new mongoose.Schema<Radio>({
         type: String,
         required: true,
     },
-    live: {
-        type: Array<Live>,
+    variants: {
+        type: Array<Variant>,
         required: true,
     }
 });

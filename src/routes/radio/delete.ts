@@ -1,8 +1,14 @@
 import { Router } from "express";
 import { body, validationResult  } from 'express-validator';
-import { default as radioM, Radio, Live } from "../../controllers/objects/models/radio.js";
+import responseC from '../../resultConstructor/responseC.js';
+import { default as radioM, Radio, Variant } from "../../controllers/objects/models/radio.js";
+import internalError from "../../resultConstructor/internalError.js";
+import badArguments from "../../resultConstructor/badArguments.js";
+import success from "../../resultConstructor/success.js";
 
 export default (router: Router): void => {
+    const requestName = "radio.delete";
+
     router.delete("/",
         body('slug').notEmpty(),
         body('slug').custom(async (slug) => {
@@ -16,13 +22,13 @@ export default (router: Router): void => {
         const result = validationResult(req);
             if (result.isEmpty()) {
                 radioM.deleteOne({ slug: req.body.slug})
-                .then(() => res.status(200).json({}))
+                .then(() => responseC(res, 200, success(requestName)))
                 .catch((e) => {
                     console.error(e);
-                    res.status(400).json({ "message": "Error deleting radio" });
+                    responseC(res, 500, internalError(requestName));
                 });
                 return;
             }
-        res.status(400).json({ errors: result.array() });
+        responseC(res, 400, badArguments(requestName, result.array()));
     })
 }

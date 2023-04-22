@@ -2,23 +2,27 @@ import express from 'express';
 import Radio from '../../controllers/objects/models/radio.js';
 import New from './new.js';
 import Delete from './delete.js';
+import responseC from '../../resultConstructor/responseC.js';
+import { default as internalError } from '../../resultConstructor/internalError.js';
+import { default as errorCustom } from '../../resultConstructor/errorCustomMessage.js';
+import { default as successResultData } from '../../resultConstructor/successData.js';
 
 const router = express.Router();
 
 router.get('/:slug?', async (request, response) => {
+    const requestName = "radio.get";
+
     let resp: any = {};
     if (request.params.slug) {
         Radio.findOne({ slug: request.params.slug }, { _id: 0, __v: 0 })
         .then ( (radio) => {
             if (!radio)
-                response.status(404).json({ "message": "Radio not found" });
-            else {
-                resp.radio = radio;
-                response.status(200).json(resp);
-            }
+                responseC(response, 404, errorCustom(requestName, "Radio not found", 404));
+            else
+                responseC(response, 200, successResultData(requestName, { radio }));
         })
         .catch( () => {
-            response.status(500).json({ "message": "Database error" });
+            responseC(response, 500, internalError(requestName));
         });
     } else {
         Radio.find({}, { _id: 0, __v: 0 })
@@ -27,10 +31,10 @@ router.get('/:slug?', async (request, response) => {
                 resp.radios = [];
             else
                 resp.radios = radios;
-            response.status(200).json(resp);
+            responseC(response, 200, successResultData(requestName, resp));
          })
         .catch( () => {
-            response.status(500).json({ "message": "Database error" });
+            responseC(response, 500, internalError(requestName));
         });
     }
 });
