@@ -1,5 +1,5 @@
 import responseC from '../../resultConstructor/responseC.js';
-import errorCustomMessage from 'src/resultConstructor/errorCustomMessage.js';
+import errorCustomMessage from '../../resultConstructor/errorCustomMessage.js';
 import { Router } from "express";
 
 const router = Router();
