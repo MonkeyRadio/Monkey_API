@@ -1,7 +1,10 @@
 import fs from "fs";
 import { Express } from "express";
 import swaggerUi from "swagger-ui-express";
-import * as yaml from "js-yaml";
+import YAML from 'yaml';
+import notFound from "./resultConstructor/notFound.js";
+import errorCustomMessage from "./resultConstructor/errorCustomMessage.js";
+import responseC from "./resultConstructor/responseC.js";
 
 let routes: Array<string> = [];
 
@@ -11,7 +14,7 @@ export default async function init_routes(app: Express): Promise<void> {
     const swaggerFile: any = (process.cwd()+"/swagger/swagger.yaml");
     const swaggerData: any = fs.readFileSync(swaggerFile, 'utf8');
     const customCss: any = fs.readFileSync((process.cwd()+"/swagger/swagger.css"), 'utf8');
-    const swaggerDocument: any = yaml.load(swaggerData);
+    const swaggerDocument: any = YAML.parse(swaggerData);
     const options = {
         customCss: customCss,
         customSiteTitle: "Monkey Radio API",
@@ -41,8 +44,15 @@ export default async function init_routes(app: Express): Promise<void> {
             app.use(`/${route}`, module.default);
         numCalls++;
         if (numCalls === routes.length) {
+            app.use((err: any, req: any, res: any, next: any) => {
+                if (err) {
+                    responseC(res, 400, errorCustomMessage('Unknown', 'Error Parsing Data', 400));
+                } else {
+                  next()
+                }
+              })
             app.use((req, res) => {
-                res.status(404).json({ message: "Route not found, please visit /api/docs" });
+                responseC(res, 404, notFound());
             });
             console.log("Routes loaded.");
             return;
