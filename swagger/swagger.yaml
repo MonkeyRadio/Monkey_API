@@ -139,8 +139,8 @@ paths:
               description: radio slug
               required: true
       responses:
-        '201':
-          description: successful operation - Created
+        '200':
+          description: successful deleted - Created
         '400':
           description: Invalid request body
         '500':
@@ -229,14 +229,18 @@ paths:
           description: radio object
           required: true
           properties:
+            slug:
+              type: string
+              required: true
+              description: radio variant slug
             name:
               type: string
-              required: false
-              description: radio name
+              required: true
+              description: radio variant name
             icon:
               type: string
-              required: false
-              description: radio icon
+              required: true
+              description: radio variant icon
       responses:
         '201':
           description: successful operation
@@ -244,6 +248,8 @@ paths:
           description: Invalid request body
         '500':
           $ref: '#/definitions/InternalError'
+
+  /radio/{radioSlug}/variant/{variantSlug}:
     put:
       summary: Update variant to a radio identified by {slug}
       description: Require 'radio.update' permission
@@ -256,15 +262,19 @@ paths:
       tags:
         - Radio
       parameters:
+        - in: path
+          name: radioSlug
+          required: true
+          description: radio slug
+        - in: path
+          name: variantSlug
+          required: true
+          description: radio variant slug
         - in: body
           name: body
-          description: radio object
+          description: radio variant object
           required: true
           properties:
-            slug:
-              type: string
-              description: radio variant slug
-              required: true
             name:
               type: string
               description: radio variant name
@@ -293,9 +303,13 @@ paths:
         - Radio
       parameters:
         - in: path
-          name: slug
-          description: radio variant slug
+          name: radioSlug
           required: true
+          description: radio slug
+        - in: path
+          name: variantSlug
+          required: true
+          description: radio variant slug
       responses:
         '200':
           description: successful operation
@@ -454,7 +468,8 @@ paths:
 
   /artist:
     post:
-      summary: "Add new artist in the database<br/>Require permission : 'artist.create'"
+      summary: Add new artist in the database
+      description: "Require permission : 'artist.create'"
       tags:
         - Artist
       security:
@@ -477,7 +492,7 @@ paths:
   /artist/{slug}:
     get:
       summary: Get artist information
-      description: "All informations about a artist slug"
+      description: "All informations about an artist slug"
       tags:
         - Artist
       parameters:
@@ -540,7 +555,8 @@ paths:
         '500':
           $ref: '#/definitions/InternalError'
     delete:
-      summary: "Delete Artist<br/>Require permission : 'artist.delete'"
+      summary: "Delete Artist"
+      description: "Require permission : 'artist.delete'"
       tags:
         - Artist
       security:
@@ -560,7 +576,8 @@ paths:
 
   /single:
     post:
-      summary: "Add new single in the database<br/>Require permission : 'single.create'"
+      summary: "Add new single in the database"
+      description: "Require permission : 'single.create'"
       tags:
         - Single
       security:
@@ -639,7 +656,8 @@ paths:
           $ref: '#/definitions/InternalError'
 
     put:
-      summary: "Update single<br/>Require permission : 'single.update'"
+      summary: "Update single"
+      description: "Require permission : 'single.update'"
       tags:
         - Single
       security:
@@ -682,14 +700,15 @@ paths:
               type: string
               required: false
       responses:
-        '201':
-          description: Single created
+        '202':
+          description: Single updated
         '400':
           description: Bad Parameters
         '500':
           $ref: '#/definitions/InternalError'
     delete:
-      summary: "Delete single<br/>Require permission : 'single.delete'"
+      summary: "Delete single"
+      description: "Require permission : 'single.delete'"
       tags:
         - Single
       security:
