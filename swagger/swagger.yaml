@@ -21,19 +21,46 @@ securityDefinitions:
     description: >-
       Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".
 paths:
+  /:
+    get:
+      summary: Template
+      description: Response data template used in all api routes
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      tags:
+        - Template
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              request:
+                type: string
+              data:
+                type: object
+              status:
+                type: number
+                example: 200
   /radio:
     get:
       summary: Get all the radios
-      description: Get all the radios
+      description: Public route - Get all the radios informations including 'slug', 'name', 'icon' and 'live' (all radio variants slug and name used to the CDN)
       tags:
-        - radio
+        - Radio
       produces:
         - application/json
+        - application/yaml
+        - application/x-yaml
       responses:
         '200':
           description: Radio List
           schema:
-            $ref: '#/definitions/radioListResponse'
+            type: array
+            items:
+              $ref: '#/definitions/radio'
         '400':
           description: Invalid status value
           schema:
@@ -42,13 +69,15 @@ paths:
           $ref: '#/definitions/InternalError'
     post:
       summary: Create a new radio
-      description: Create a new radio
+      description: Require 'radio.create' permission or 'admin' role
       security:
         - Bearer: []
       produces:
         - application/json
+        - application/yaml
+        - application/x-yaml
       tags:
-        - radio
+        - Radio
       parameters:
         - in: body
           name: body
@@ -65,13 +94,15 @@ paths:
           $ref: '#/definitions/InternalError'
     delete:
       summary: Delete a radio
-      description: Delete a radio
+      description: Require 'radio.delete' permission or 'admin' role
       security:
         - Bearer: []
       tags:
-        - radio
+        - Radio
       produces:
         - application/json
+        - application/yaml
+        - application/x-yaml
       parameters:
         - in: body
           name: body
@@ -87,7 +118,7 @@ paths:
       summary: Get the radio represented by slug
       description: Get the radio represented by slug
       tags:
-        - radio
+        - Radio
       parameters:
         - name: slug
           in: path
@@ -96,6 +127,8 @@ paths:
           type: string
       produces:
         - application/json
+        - application/yaml
+        - application/x-yaml
       responses:
         '200':
           description: Radio data
@@ -105,7 +138,33 @@ paths:
           description: This radio does not exist or this slug is not valid
           schema:
             $ref: '#/definitions/InvalidResponse'
+        '500':
+          $ref: '#/definitions/InternalError'
+  /login:
+    post:
+      summary: Login with your Monkey Account
+      description: You must have valid and active account
+      tags:
+        - User
+      parameters:
+        - name: username
+          in: formData
+          required: true
+          type: string
+        - name: password
+          in: formData
+          required: true
+          type: string
 definitions:
+  radioVariant:
+    type: object
+    properties:
+      slug:
+        type: string
+      name:
+        type: string
+      icon:
+        type: string
   radio:
     type: object
     properties:
@@ -119,18 +178,10 @@ definitions:
       icon:
         type: string
         description: radio icon
-  radioResponse:
-    type: object
-    properties:
-      radio:
-        $ref: '#/definitions/radio'
-  radioListResponse:
-    type: object
-    properties:
-      radios:
+      variants:
         type: array
         items:
-          $ref: '#/definitions/radio'
+          $ref: '#/definitions/radioVariant'
   InvalidResponse:
     type: object
     properties:
