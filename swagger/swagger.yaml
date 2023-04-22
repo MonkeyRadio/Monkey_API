@@ -1,0 +1,191 @@
+swagger: '2.0'
+info:
+  description: MonkeyRadio API Documentation
+  version: 2.0.0
+  title: MonkeyRadio API
+  contact:
+    email: contact@monkeyradio.fr
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+schemes:
+  - http
+  - https
+host: api.monkeyradio.fr
+basePath: /api
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >-
+      Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".
+paths:
+  /:
+    get:
+      summary: Template
+      description: Response data template used in all api routes
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      tags:
+        - Template
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              request:
+                type: string
+              data:
+                type: object
+              status:
+                type: number
+                example: 200
+  /radio:
+    get:
+      summary: Get all the radios
+      description: Public route - Get all the radios informations including 'slug', 'name', 'icon' and 'live' (all radio variants slug and name used to the CDN)
+      tags:
+        - Radio
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      responses:
+        '200':
+          description: Radio List
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/radio'
+        '400':
+          description: Invalid status value
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        '500':
+          $ref: '#/definitions/InternalError'
+    post:
+      summary: Create a new radio
+      description: Require 'radio.create' permission or 'admin' role
+      security:
+        - Bearer: []
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      tags:
+        - Radio
+      parameters:
+        - in: body
+          name: body
+          description: radio object
+          required: true
+          schema:
+            $ref: '#/definitions/radio'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid request body
+        '500':
+          $ref: '#/definitions/InternalError'
+    delete:
+      summary: Delete a radio
+      description: Require 'radio.delete' permission or 'admin' role
+      security:
+        - Bearer: []
+      tags:
+        - Radio
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      parameters:
+        - in: body
+          name: body
+          description: radio slug
+          required: true
+          schema:
+            slug:
+              type: string
+              description: radio slug
+              required: true
+  /radio{slug}:
+    get:
+      summary: Get the radio represented by slug
+      description: Get the radio represented by slug
+      tags:
+        - Radio
+      parameters:
+        - name: slug
+          in: path
+          description: radio slug
+          required: true
+          type: string
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      responses:
+        '200':
+          description: Radio data
+          schema:
+            $ref: '#/definitions/radio'
+        '400':
+          description: This radio does not exist or this slug is not valid
+          schema:
+            $ref: '#/definitions/InvalidResponse'
+        '500':
+          $ref: '#/definitions/InternalError'
+  /login:
+    post:
+      summary: Login with your Monkey Account
+      description: You must have valid and active account
+      tags:
+        - User
+      parameters:
+        - name: username
+          in: formData
+          required: true
+          type: string
+        - name: password
+          in: formData
+          required: true
+          type: string
+definitions:
+  radioVariant:
+    type: object
+    properties:
+      slug:
+        type: string
+      name:
+        type: string
+      icon:
+        type: string
+  radio:
+    type: object
+    properties:
+      slug:
+        type: string
+        description: radio slug
+        required: true
+      name:
+        type: string
+        description: radio name
+      icon:
+        type: string
+        description: radio icon
+      variants:
+        type: array
+        items:
+          $ref: '#/definitions/radioVariant'
+  InvalidResponse:
+    type: object
+    properties:
+      message:
+        type: string
+  InternalError:
+    description: Internal Server Error
