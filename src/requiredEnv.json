@@ -1,4 +1,4 @@
 [
     "MONGODB_URI",
-    "REDIS_URI"
+    "REDIS_HOST"
 ]
