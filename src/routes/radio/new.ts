@@ -5,11 +5,13 @@ import { default as radioM, Radio, Variant } from "../../controllers/objects/mod
 import { default as badArgs } from "../../resultConstructor/badArguments.js";
 import { default as internalError } from "../../resultConstructor/internalError.js";
 import { default as successResult } from "../../resultConstructor/success.js";
+import auth from "../../middlewares/auth/verifyToken.js";
 
 export default (router: Router): void => {
     const requestName = "radio.create";
 
     router.post("/",
+        auth,
         body('slug').notEmpty(),
         body('slug').custom(async (slug) => {
             const doc = await radioM.findOne({ slug });

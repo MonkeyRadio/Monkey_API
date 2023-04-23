@@ -5,11 +5,13 @@ import { default as radioM, Radio, Variant } from "../../controllers/objects/mod
 import internalError from "../../resultConstructor/internalError.js";
 import badArguments from "../../resultConstructor/badArguments.js";
 import success from "../../resultConstructor/success.js";
+import auth from "../../middlewares/auth/verifyToken.js";
 
 export default (router: Router): void => {
     const requestName = "radio.delete";
 
     router.delete("/",
+        auth,
         body('slug').notEmpty(),
         body('slug').custom(async (slug) => {
             const doc = await radioM.findOne({ slug });
