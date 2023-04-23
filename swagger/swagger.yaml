@@ -419,6 +419,67 @@ paths:
           description: Bad Parameters
         '500':
           $ref: '#/definitions/InternalError'
+  /auth/permission/{username}:
+    put:
+      summary: Add permission to a user
+      description: "Require permission: 'admin'"
+      tags:
+        - User
+      security:
+        - Bearer: []
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+          description: UserName
+        - name: user
+          in: formData
+          required: true
+          type: string
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      responses:
+        '202':
+          description: Request has been executed without error but cannot guarantee results
+        '401':
+          description: Unauthorized
+        '400':
+          description: Bad Parameters
+        '500':
+          $ref: '#/definitions/InternalError'
+    delete:
+      summary: Delete permission to a user
+      description: "Require permission: 'admin'"
+      tags:
+        - User
+      security:
+        - Bearer: []
+      parameters:
+        - name: username
+          in: path
+          required: true
+          type: string
+          description: UserName
+        - name: user
+          in: formData
+          required: true
+          type: string
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      responses:
+        '202':
+          description: Request has been executed without error but cannot guarantee results
+        '401':
+          description: Unauthorized
+        '400':
+          description: Bad Parameters
+        '500':
+          $ref: '#/definitions/InternalError'
   /auth/renewToken:
     post:
       summary: Renew Access Token with Renew Token
@@ -447,22 +508,17 @@ paths:
           $ref: '#/definitions/InternalError'
   /auth/destroyTokenFamily:
     post:
-      summary: Destroy given token and all this token family
+      summary: Destroy actual token passed in Authorization header and all this token family
       description: "This will destroy all the token family including all actual Access and Refresh token.<br/>In others terms, this will logout all instances of this user using THIS token family!<br/>This will not logout others tokens related to the user's token."
       tags:
         - User
-      parameters:
-        - name: token
-          in: formData
-          required: true
-          type: string
+      security:
+        - Bearer: []
       responses:
         '200':
           description: Success destroying token family, you're logout
         '401':
           description: Token is not valid
-        '400':
-          description: Bad Parameters
         '500':
           $ref: '#/definitions/InternalError'
 
@@ -759,11 +815,11 @@ definitions:
       token:
         type: string
       expUTC:
-        type: number
+        type: string
       refreshToken:
         type: string
       refreshExpUTC:
-        type: number
+        type: string
   Artist:
     type: object
     properties:
