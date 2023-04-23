@@ -10,7 +10,7 @@ services:
     networks:
       - backend
 
-  db:
+  mongo:
     image: mongo
     restart: unless-stopped
     volumes:
@@ -29,11 +29,10 @@ services:
     env_file: ./.env
     environment:
       MONGODB_URI: "mongodb://noworry:itsalocalapp@mongo"
-      REDIS_URL: "redis://redis"
+      REDIS_HOST: "redis"
       ROUTE_SRC: "./dist/routes/"
     ports:
       - $PORT:$PORT
-      - $HOST:$HOST
     depends_on:
       - mongo
       - redis
