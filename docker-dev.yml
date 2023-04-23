@@ -31,7 +31,7 @@ services:
     env_file: ./.env
     environment:
       MONGODB_URI: "mongodb://noworry:itsalocalapp@mongo"
-      REDIS_URI: "redis://redis"
+      REDIS_HOST: "redis"
       ROUTE_SRC: "./src/routes/"
     volumes:
       - .:/app
