@@ -1,5 +1,6 @@
 import { default as userM, User } from '../../controllers/auth/models/user.js';
 import { promises } from 'fs';
+import bcrypt from "bcrypt";
 
 export default async (): Promise<void> => {
     if (!process.env.JWT) {
@@ -22,7 +23,7 @@ export default async (): Promise<void> => {
             name: 'admin',
             icon: 'admin',
             email: 'admin@admin.com',
-            password: password,
+            password: await bcrypt.hash(password, 10),
             permissions: ['admin']
         });
         console.log(`New Admin Created with password : ${password}`);

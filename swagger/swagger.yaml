@@ -383,6 +383,25 @@ paths:
           description: Bad Parameters
         '500':
           $ref: '#/definitions/InternalError'
+  /auth/infos:
+    get:
+      summary: Get Account informations
+      description: Get Account informations related to the Access Token given in authorization header
+      tags:
+        - User
+      security:
+        - Bearer: []
+      produces:
+        - application/json
+        - application/yaml
+        - application/x-yaml
+      responses:
+        '200':
+          description: Account data
+        '401':
+          description: Unauthorized
+        '500':
+          $ref: '#/definitions/InternalError'
   /auth/update:
     put:
       summary: Update account information
@@ -433,7 +452,7 @@ paths:
           required: true
           type: string
           description: UserName
-        - name: user
+        - name: permission
           in: formData
           required: true
           type: string

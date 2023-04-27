@@ -16,7 +16,7 @@ async function newFamilyToken(): Promise<string> {
     if (await redisClient.get(`AuthTokenFamilyID:${familyID}`)) {
         return newFamilyToken();
     } else {
-        await redisClient.set(`AuthTokenFamilyID:${familyID}`, "family", ["EX", Math.floor(2*604800)]);
+        await redisClient.set(`AuthTokenFamilyID:${familyID}`, "0", ["EX", Math.floor(2*604800)]);
         return familyID;
     }
     } catch (e) {

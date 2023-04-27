@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { body, validationResult  } from 'express-validator';
-import { User, default as userM } from "../../controllers/auth/models/user.js";
+import userM from "../../controllers/auth/models/user.js";
 import responseC from '../../resultConstructor/responseC.js';
-import { default as radioM, Radio, Variant } from "../../controllers/objects/models/radio.js";
 import internalError from "../../resultConstructor/internalError.js";
 import badArguments from "../../resultConstructor/badArguments.js";
 import successData from "../../resultConstructor/successData.js";
@@ -20,7 +19,6 @@ export default (router: Router): void => {
             }
             return true;
         }),
-        body('email').isEmail(),
         body('email').isEmail(),
         body('password').notEmpty(),
         body('password').isLength({ min: 8 }),

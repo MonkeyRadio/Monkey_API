@@ -63,7 +63,7 @@ async function start(): Promise<void> {
 
 start();
 
-process.on("uncaughtException", function (err) {
+process.on("uncaughtException", (err) => {
     console.log("Caught exception: ", err);
 });
 

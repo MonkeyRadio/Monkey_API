@@ -8,6 +8,7 @@ async function destroyFamily(token: string): Promise<boolean> {
         let data: any = (jwt.decode(token) as any);
         if (data.username && await redisClient.get(`AuthTokenFamilyID:${data.tokenFamily}`)) {
             await redisClient.del(`AuthTokenFamilyID:${data.tokenFamily}`);
+            await redisClient.del(`AuthTokenUsername:${data.tokenFamily}`);
         }
     } catch (e) {
         return false;
