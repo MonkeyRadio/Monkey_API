@@ -54,17 +54,18 @@ async function start(): Promise<void> {
         console.error("Cannot connect to redis");
         console.error(error);
     }
+    await init_routes(app);
+    await defaultAdmin();
     app.listen(port, host, async () => {
-        await init_routes(app);
         console.log(`Server is running on http://${host}:${port}`);
-        defaultAdmin();
     });
 }
 
-start();
+if (process.env.NODE_ENV !== 'test')
+    start();
 
 process.on("uncaughtException", (err) => {
     console.log("Caught exception: ", err);
 });
 
-export { redisClient };
+export { redisClient, app, start };

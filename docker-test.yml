@@ -4,7 +4,7 @@ services:
 
   redis:
     image: redis:alpine
-    restart: unless-stopped
+    restart: no
     volumes:
       - redis:/data
     networks:
@@ -12,7 +12,7 @@ services:
 
   mongo:
     image: mongo
-    restart: unless-stopped
+    restart: no
     volumes:
       - mongodb:/data/db
     networks:
@@ -21,20 +21,18 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: noworry
       MONGO_INITDB_ROOT_PASSWORD: itsalocalapp
-    command: mongod --auth
+    command: mongod --auth --quiet --logpath /dev/null 
 
-  server:
+  test:
     build:
       context: .
-      dockerfile: dev.Dockerfile
-    restart: unless-stopped
+      dockerfile: test.Dockerfile
+    restart: no
     env_file: ./.env
     environment:
       MONGODB_URI: "mongodb://noworry:itsalocalapp@mongo"
       REDIS_HOST: "redis"
       ROUTE_SRC: "./src/routes/"
-    volumes:
-      - .:/app
     ports:
       - $PORT:$PORT
       - 9229:9229
@@ -43,7 +41,6 @@ services:
       - redis
     networks:
       - backend
-    command: npm run dev
 
 networks:
   backend:
