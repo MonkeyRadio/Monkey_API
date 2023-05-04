@@ -7,10 +7,4 @@ COPY ./src ./src
 COPY ./swagger ./swagger
 RUN rm -rf ./dist
 RUN npm run build
-
-FROM node:19-alpine
-WORKDIR /app
-COPY --from=ts-compiler /app/ ./
-ENV NODE_ENV=production
-RUN npm install
-ENTRYPOINT [ "npm", "start" ]
+CMD [ "npm", "run", "test" ]

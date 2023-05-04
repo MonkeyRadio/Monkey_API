@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from "mongoose";
+import { createNodeRedisClient, WrappedNodeRedisClient } from 'handy-redis';
 import requiredEnv from './requiredEnv.json' assert {
     type: "json"
 };
@@ -14,6 +15,8 @@ const app = express();
 const port: number = parseInt(process.env.PORT!) || 3000;
 const host: string = process.env.HOST || '0.0.0.0';
 const proxyLevel: number = parseInt(process.env.PROXY_LEVEL!) || 0;
+
+let redisClient: WrappedNodeRedisClient;
 
 function check_env_vars(): boolean {
     for (let i = 0; i < requiredEnv.length; i++) {
@@ -44,15 +47,25 @@ async function start(): Promise<void> {
         console.error(error);
         return;
     }
+    try {
+        console.log("Connecting to redis");
+        redisClient = createNodeRedisClient({ host: process.env.REDIS_HOST! });
+    } catch (error) {
+        console.error("Cannot connect to redis");
+        console.error(error);
+    }
+    await init_routes(app);
+    await defaultAdmin();
     app.listen(port, host, async () => {
-        await init_routes(app);
         console.log(`Server is running on http://${host}:${port}`);
-        defaultAdmin();
     });
 }
 
-start();
+if (process.env.NODE_ENV !== 'test')
+    start();
 
-process.on("uncaughtException", function (err) {
+process.on("uncaughtException", (err) => {
     console.log("Caught exception: ", err);
 });
+
+export { redisClient, app, start };

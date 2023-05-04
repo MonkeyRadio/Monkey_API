@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export type User = {
-    uid: string,
+    slug: string,
     name: string,
     icon: string,
     email: string,
@@ -10,7 +10,7 @@ export type User = {
 }
 
 const schema =  new mongoose.Schema<User>({
-    uid: {
+    slug: {
         type: String,
         required: true,
         unique: true,
@@ -22,7 +22,7 @@ const schema =  new mongoose.Schema<User>({
     },
     icon: {
         type: String,
-        required: true,
+        required: false,
     },
     email: {
         type: String,
