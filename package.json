@@ -7,7 +7,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --forceExit"
+    "test": "NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --forceExit",
+    "docker-test": "docker compose -f .\\docker-test.yml run --build test && docker compose -f .\\docker-test.yml down -v",
+    "docker-prod": "docker compose up --build"
   },
   "repository": {
     "type": "git",
@@ -63,6 +65,7 @@
       "js"
     ],
     "transform": {},
+    "globalSetup": "./dist/__tests__/config/config.js",
     "globals": {
       "ts-jest": {
         "tsConfigFile": "tsconfig.json",

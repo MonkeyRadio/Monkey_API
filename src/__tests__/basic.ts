@@ -19,16 +19,16 @@ async function fet(input: RequestInfo | URL, init?: RequestInit | undefined): Pr
     return r;
 }
 
-describe("Get no radio", () => {
-  it("No radio", async () => {
-    const result = await fet(`http://localhost:${process.env.PORT}/radio`);
+describe("Unknown Route", () => {
+  it("Unknown route", async () => {
+    const result = await fet(`http://localhost:${process.env.PORT}/`);
     expect(result.ret).toEqual({
-      request: "radio.get",
-      data: {
-        radios: []
-      },
-      status: 200
+      request: "Unknown",
+      errors: [
+          "Route not found, please visit /docs for more information"
+      ],
+      status: 404
   });
-    expect(result.code).toEqual(200);
+    expect(result.code).toEqual(404);
   });
 });

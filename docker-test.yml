@@ -5,16 +5,12 @@ services:
   redis:
     image: redis:alpine
     restart: no
-    volumes:
-      - redis:/data
     networks:
       - backend
 
   mongo:
     image: mongo
     restart: no
-    volumes:
-      - mongodb:/data/db
     networks:
       - backend
     env_file: ./.env
@@ -34,7 +30,6 @@ services:
       REDIS_HOST: "redis"
       ROUTE_SRC: "./src/routes/"
     ports:
-      - $PORT:$PORT
       - 9229:9229
     depends_on:
       - mongo
@@ -44,7 +39,3 @@ services:
 
 networks:
   backend:
-
-volumes:
-  mongodb:
-  redis:

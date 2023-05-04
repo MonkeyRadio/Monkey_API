@@ -21,7 +21,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: noworry
       MONGO_INITDB_ROOT_PASSWORD: itsalocalapp
-    command: mongod --auth
+    command: mongod --auth --quiet --logpath /dev/null 
 
   server:
     build: .
