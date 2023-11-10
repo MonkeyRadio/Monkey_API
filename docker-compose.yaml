@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    networks:
+      - api
+    command: redis-server --loglevel warning --requirepass ${REDIS_PASSWORD}
+
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "${EXPOSED_DB_PORT}:27017"
+    volumes:
+      - monkeyradio-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB}
+    networks:
+      - api
+
+  api:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "${EXPOSED_API_PORT}:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    networks:
+      - api
+
+networks:
+  api:
+
+volumes:
+  monkeyradio-db:
