@@ -23,8 +23,6 @@ import { AppController } from "./app.controller";
     AuthModule,
     RadioModule,
   ],
-  controllers: [
-    AppController,
-  ],
+  controllers: [AppController],
 })
 export class AppModule {}
