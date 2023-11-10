@@ -26,7 +26,7 @@ async function bootstrap() {
 
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: "2",
+    defaultVersion: "4",
   });
 
   app.getHttpAdapter().getInstance().disable("x-powered-by");
@@ -39,7 +39,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle("MonkeyRadio API")
     .setDescription("Where all the MonkeyRadio data passes")
-    .setVersion("2.0")
+    .setVersion("4.0")
     .addBearerAuth()
     .build();
 

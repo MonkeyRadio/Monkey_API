@@ -4,6 +4,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { RedisModule } from "@songkeys/nestjs-redis";
 import { AuthModule } from "./auth/auth.module";
 import { RadioModule } from "./radio/radio.module";
+import { AppController } from "./app.controller";
 
 @Module({
   imports: [
@@ -21,6 +22,9 @@ import { RadioModule } from "./radio/radio.module";
     }),
     AuthModule,
     RadioModule,
+  ],
+  controllers: [
+    AppController,
   ],
 })
 export class AppModule {}
