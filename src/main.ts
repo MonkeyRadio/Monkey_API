@@ -13,7 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: [/localhost(:\d*)?$/, /.monkeyradio.fr$/],
+    origin: [/localhost(:\d*)?$/, /.monkeyradio.fr$/, /.monkeyradio.netlify.app$/],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
