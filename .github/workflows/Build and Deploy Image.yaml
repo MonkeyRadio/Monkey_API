@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - staging
-      - develop
 
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
@@ -38,19 +37,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Get env
-        id: env
-        run: |
-          if [[ ${{ github.ref }} == "refs/heads/main" ]]; then
-            echo "env=MAIN" >> $GITHUB_ENV
-          elif [[ ${{ github.ref }} == "refs/heads/staging" ]]; then
-            echo "env=STAGING" >> $GITHUB_ENV
-          elif [[ ${{ github.ref }} == "refs/heads/develop" ]]; then
-            echo "env=DEV" >> $GITHUB_ENV
-          else
-            echo "Error - wrong env to trigger deployment"
-          fi
-        shell: bash
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
@@ -72,9 +58,7 @@ jobs:
         if [[ ${{ github.ref }} == "refs/heads/main" ]]; then
           echo "SECRET_NAME=PORTAINER_WEBHOOK_PROD" >> $GITHUB_ENV
         elif [[ ${{ github.ref }} == "refs/heads/staging" ]]; then
-          echo "SECRET_NAME=PORTAINER_WEBHOOK_STAGING" >> $GITHUB_ENV
-        elif [[ ${{ github.ref }} == "refs/heads/develop" ]]; then
-          echo "SECRET_NAME=PORTAINER_WEBHOOK_DEV" >> $GITHUB_ENV
+          echo "SECRET_NAME=PORTAINER_WEBHOOK_PREPROD" >> $GITHUB_ENV
         else
           echo "Error - wrong env to trigger deployment"
         fi
