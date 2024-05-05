@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseInterceptors,
@@ -27,6 +26,7 @@ import { Roles } from "@/constants/roles";
 import { AuthGuard } from "@/guards/auth.guard";
 import { RoleGuard } from "@/guards/role.guard";
 import { RadioDto } from "./dto/radio.dto";
+import { Request as ExpressRequest } from "express";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("radio")
@@ -61,10 +61,10 @@ export class RadioController {
     type: RadioDto,
   })
   @Get("findByDomain")
-  findOneByDomain(@Request() query: any) {
+  findOneByDomain(@Request() query: ExpressRequest) {
     return this.radioService.findOneByDomain(query);
   }
-  
+
   @ApiOkResponse({
     description: "The record has been successfully retrieved.",
     type: RadioDto,
