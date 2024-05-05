@@ -11,6 +11,7 @@ import {
   UseGuards,
   HttpCode,
   Put,
+  Request,
 } from "@nestjs/common";
 import { RadioService } from "./radio.service";
 import { CreateRadioDto } from "./dto/create-radio.dto";
@@ -55,6 +56,15 @@ export class RadioController {
     return this.radioService.findAll();
   }
 
+  @ApiOkResponse({
+    description: "The record has been successfully retrieved.",
+    type: RadioDto,
+  })
+  @Get("findByDomain")
+  findOneByDomain(@Request() query: any) {
+    return this.radioService.findOneByDomain(query);
+  }
+  
   @ApiOkResponse({
     description: "The record has been successfully retrieved.",
     type: RadioDto,

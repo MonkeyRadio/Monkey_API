@@ -9,6 +9,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Radio } from "@/schemas/radio.schema";
 import { Model } from "mongoose";
 import { RadioDto } from "./dto/radio.dto";
+import { Request } from "express";
 
 @Injectable()
 export class RadioService {
@@ -34,6 +35,19 @@ export class RadioService {
   async findOne(id: string) {
     try {
       const radio = await this.radioModel.findById(id);
+      return new RadioDto(radio.toObject());
+    } catch (error) {
+      throw new NotFoundException("Radio not found");
+    }
+  }
+
+  async findOneByDomain(query: Request) {
+    if (!query.query.websiteDomain)
+      throw new BadRequestException("Field websiteDomain is required");
+    try {
+      const radio = await this.radioModel.findOne({
+        websiteUrl: query.query.websiteDomain,
+      });
       return new RadioDto(radio.toObject());
     } catch (error) {
       throw new NotFoundException("Radio not found");

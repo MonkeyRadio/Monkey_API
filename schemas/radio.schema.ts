@@ -8,6 +8,9 @@ export class Radio {
   @Prop({ unique: true, type: String })
   name: string;
 
+  @Prop({ type: String, required: false, unique: true, index: true })
+  websiteUrl: string;
+
   @Prop({ type: String })
   videoLiveUrl: string;
 }
