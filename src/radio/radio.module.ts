@@ -5,6 +5,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { JwtModule } from "@nestjs/jwt";
 import { UserSchema } from "@/schemas/user.schema";
 import { RadioSchema } from "@/schemas/radio.schema";
+import { LiveModule } from './live/live.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { RadioSchema } from "@/schemas/radio.schema";
         expiresIn: process.env.JWT_ACESS_TOKEN_EXPIRATION || "20m",
       },
     }),
+    LiveModule,
   ],
   controllers: [RadioController],
   providers: [RadioService],
