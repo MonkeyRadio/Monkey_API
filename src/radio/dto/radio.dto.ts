@@ -12,4 +12,8 @@ export class RadioDto extends Dto {
   @ApiProperty({ description: "Radio name" })
   @Expose()
   name: string;
+
+  @ApiProperty({ description: "Radio live video url" })
+  @Expose()
+  videoLiveUrl: string;
 }

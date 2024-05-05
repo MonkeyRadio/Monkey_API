@@ -10,6 +10,7 @@ import {
   ClassSerializerInterceptor,
   UseGuards,
   HttpCode,
+  Put,
 } from "@nestjs/common";
 import { RadioService } from "./radio.service";
 import { CreateRadioDto } from "./dto/create-radio.dto";
@@ -69,7 +70,7 @@ export class RadioController {
   })
   @MustBe(Roles.Administrator)
   @UseGuards(AuthGuard, RoleGuard)
-  @Patch(":id")
+  @Put(":id")
   @HttpCode(202)
   update(@Param("id") id: string, @Body() updateRadioDto: UpdateRadioDto) {
     return this.radioService.update(id, updateRadioDto);

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Radio, RadioSchema } from "./radio.schema";
+import { User, UserSchema } from "./user.schema";
 
 const getModels = async () => {
   mongoose.set("strictQuery", false);
@@ -11,9 +12,11 @@ const getModels = async () => {
     },
   );
 
+  const UserModel = mongoose.model<User>(User.name, UserSchema);
   const RadioModel = mongoose.model<Radio>(Radio.name, RadioSchema);
 
   return {
+    UserModel,
     RadioModel,
   };
 };
