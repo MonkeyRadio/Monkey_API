@@ -3,13 +3,14 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
   HttpCode,
+  Put,
+  Request,
 } from "@nestjs/common";
 import { RadioService } from "./radio.service";
 import { CreateRadioDto } from "./dto/create-radio.dto";
@@ -25,6 +26,7 @@ import { Roles } from "@/constants/roles";
 import { AuthGuard } from "@/guards/auth.guard";
 import { RoleGuard } from "@/guards/role.guard";
 import { RadioDto } from "./dto/radio.dto";
+import { Request as ExpressRequest } from "express";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("radio")
@@ -58,6 +60,15 @@ export class RadioController {
     description: "The record has been successfully retrieved.",
     type: RadioDto,
   })
+  @Get("findByDomain")
+  findOneByDomain(@Request() query: ExpressRequest) {
+    return this.radioService.findOneByDomain(query);
+  }
+
+  @ApiOkResponse({
+    description: "The record has been successfully retrieved.",
+    type: RadioDto,
+  })
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.radioService.findOne(id);
@@ -69,7 +80,7 @@ export class RadioController {
   })
   @MustBe(Roles.Administrator)
   @UseGuards(AuthGuard, RoleGuard)
-  @Patch(":id")
+  @Put(":id")
   @HttpCode(202)
   update(@Param("id") id: string, @Body() updateRadioDto: UpdateRadioDto) {
     return this.radioService.update(id, updateRadioDto);

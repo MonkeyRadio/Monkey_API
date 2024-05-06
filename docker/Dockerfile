@@ -16,5 +16,6 @@ COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/migrations /app/migrations
 COPY --from=builder /app/schemas /app/schemas
 COPY --from=builder /app/migrate.ts /app/migrate.ts
+COPY --from=builder /app/constants /app/constants
 EXPOSE ${PORT}
 CMD ["npm", "run", "start:prod"]

@@ -7,6 +7,12 @@ export type RadioDocument = HydratedDocument<Radio>;
 export class Radio {
   @Prop({ unique: true, type: String })
   name: string;
+
+  @Prop({ type: String, required: false, unique: true, index: true })
+  websiteUrl: string;
+
+  @Prop({ type: String })
+  videoLiveUrl: string;
 }
 
 export const RadioSchema = SchemaFactory.createForClass(Radio);
