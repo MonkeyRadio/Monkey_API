@@ -103,6 +103,7 @@ describe("RadioController - radio_crud", () => {
       .post("/radio")
       .send({
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       })
       .set("Authorization", `Bearer ${token}`)
       .expect(201);
@@ -138,12 +139,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -185,12 +189,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -244,12 +251,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -270,7 +280,7 @@ describe("RadioController - radio_crud", () => {
     };
 
     const response2 = await apiClient()
-      .patch(`/radio/${radio.id}`)
+      .put(`/radio/${radio.id}`)
       .send(newRadio)
       .set("Authorization", `Bearer ${token}`)
       .expect(202);
@@ -313,12 +323,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -376,12 +389,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -425,12 +441,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -451,7 +470,7 @@ describe("RadioController - radio_crud", () => {
     };
 
     const response2 = await apiClient()
-      .patch(`/radio/${radio.id}1`)
+      .put(`/radio/${radio.id}1`)
       .send(newRadio)
       .set("Authorization", `Bearer ${token}`)
       .expect(400);
@@ -482,12 +501,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -534,12 +556,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3001"
       },
       {
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3002"
       },
     ];
 
@@ -555,7 +580,8 @@ describe("RadioController - radio_crud", () => {
       .post("/radio")
       .send({
         name: faker.person.firstName(),
-      })
+   
+   websiteUrl: "https://localhost:3000"   })
       .expect(401);
 
     const response2 = await apiClient().get("/radio").expect(200);
@@ -565,10 +591,11 @@ describe("RadioController - radio_crud", () => {
     const response3 = await apiClient().get(`/radio/${radio1.id}`).expect(200);
 
     const response4 = await apiClient()
-      .patch(`/radio/${radio1.id}`)
+      .put(`/radio/${radio1.id}`)
       .send({
         name: faker.person.firstName(),
-      })
+   
+   websiteUrl: "https://localhost:3000"   })
       .expect(401);
 
     const response5 = await apiClient()
@@ -602,6 +629,7 @@ describe("RadioController - radio_crud", () => {
       .post("/radio")
       .send({
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       })
       .set("Authorization", `Bearer ${token}`)
       .expect(403);
@@ -609,9 +637,10 @@ describe("RadioController - radio_crud", () => {
     const response2 = await apiClient().get("/radio").expect(200);
 
     await apiClient()
-      .patch(`/radio/null`)
+      .put(`/radio/null`)
       .send({
         name: faker.person.firstName(),
+        websiteUrl: "https://localhost:3000"
       })
       .set("Authorization", `Bearer ${token}`)
       .expect(403);
