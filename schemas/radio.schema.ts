@@ -1,3 +1,4 @@
+import { DiffusionLink } from "@/types/DiffusionLink";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 
@@ -10,6 +11,9 @@ export class Radio {
 
   @Prop({ type: String, required: false, unique: true, index: true })
   websiteUrl: string;
+
+  @Prop({ type: Array, required: false, default: [] })
+  liveStream: DiffusionLink[];
 
   @Prop({ type: String })
   videoLiveUrl: string;

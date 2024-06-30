@@ -9,10 +9,12 @@ import {
   Get,
   Request,
   UseGuards,
+  BadRequestException,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { RegisterDto } from "./dto/register.dto";
-import { LoginDto } from "./dto/login.dto";
+import { AccreditDto, RegisterDto} from "@/src/auth/dto";
+import { LoginDto } from "@/src/auth/dto";
 import { AuthGuard } from "@/guards/auth.guard";
 import { AuthExpiredGuard } from "@/guards/authExpired.guard";
 import { AuthUnsafeGuard } from "@/guards/AuthUnsafe.guard";
@@ -20,12 +22,14 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
-  ApiOkResponse,
+  ApiOkResponse, ApiParam,
   ApiTags,
   ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
 import { RenewTokenDto, SignInDto, UserDto } from "./dto";
 import { RequestAuthenticated } from "@/types/RequestAuthenticated";
+import { UserScope } from "@/enums/UserScope.enum";
+import { Role } from "@/enums/Role.enum";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("Authentication")
@@ -77,5 +81,23 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async me(@Request() req: RequestAuthenticated) {
     return this.authService.me(req);
+  }
+
+  @ApiBearerAuth()
+  @ApiOkResponse({ description: "User has accreditation" })
+  @ApiUnauthorizedResponse({ description: "Unauthorized" })
+  @ApiParam({ name: "scope", enum: UserScope })
+  @ApiParam({ name: "role", enum: Role })
+  @UseGuards(AuthGuard)
+  @Post("accreditation")
+  @HttpCode(HttpStatus.OK)
+  async accreditations(
+    @Request() req: RequestAuthenticated,
+    @Body() accredit: AccreditDto,
+  ) {
+    if (!accredit.role) throw new BadRequestException("Invalid role");
+    if (!accredit.scope) throw new BadRequestException("Invalid scope");
+    if (await this.authService.accredit(req, accredit.scope, accredit.role)) return;
+    throw new UnauthorizedException("Unauthorized");
   }
 }
