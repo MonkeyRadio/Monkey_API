@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import * as bcrypt from "bcryptjs";
-import { Roles } from "../constants/roles";
+import { Role } from "@/enums/Role.enum";
+import { UserScope } from "@/enums/UserScope.enum";
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -16,8 +17,11 @@ export class User {
   @Prop({ type: String })
   password: string;
 
-  @Prop({ default: [Roles.Member], type: Array })
-  roles: string[];
+  @Prop({ default: [Role.Member], type: Array })
+  roles: Role[];
+
+  @Prop({ default: [UserScope.Default], type: Array })
+  scopes: UserScope[];
 }
 
 const UserSchema = SchemaFactory.createForClass(User);

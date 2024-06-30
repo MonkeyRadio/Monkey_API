@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Test, TestingModule } from "@nestjs/testing";
-import { Connection, connect, Mongoose, Model, model } from "mongoose";
+import { Connection, connect, Mongoose, model } from "mongoose";
 import { RedisMemoryServer } from "redis-memory-server";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import { MongooseModule, getConnectionToken } from "@nestjs/mongoose";
@@ -11,7 +11,7 @@ import * as supertest from "supertest";
 import { ValidationPipe } from "@nestjs/common";
 import { AuthModule } from "@/src/auth/auth.module";
 import { UserSchema } from "@/schemas/user.schema";
-import { Roles } from "@/constants/roles";
+import { Role } from "@/enums/Role.enum";
 
 describe("RadioController - radio_crud", () => {
   let redisd: RedisMemoryServer;
@@ -82,7 +82,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -103,7 +103,7 @@ describe("RadioController - radio_crud", () => {
       .post("/radio")
       .send({
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       })
       .set("Authorization", `Bearer ${token}`)
       .expect(201);
@@ -119,7 +119,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -139,15 +139,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -169,7 +169,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -189,15 +189,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -231,7 +231,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -251,15 +251,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -303,7 +303,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -323,15 +323,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -357,7 +357,7 @@ describe("RadioController - radio_crud", () => {
       id: radio.id,
     });
 
-    const response3 = await apiClient().get(`/radio/${radio.id}`).expect(404);
+    await apiClient().get(`/radio/${radio.id}`).expect(404);
 
     const response4 = await apiClient().get("/radio").expect(200);
 
@@ -369,7 +369,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -389,15 +389,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -413,7 +413,7 @@ describe("RadioController - radio_crud", () => {
 
     const radio = response.body[0];
 
-    const response2 = await apiClient().get(`/radio/${radio.id}1`).expect(404);
+    await apiClient().get(`/radio/${radio.id}1`).expect(404);
   });
 
   it("should create some radios and update one of them with a wrong id", async () => {
@@ -421,7 +421,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -441,15 +441,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -469,7 +469,7 @@ describe("RadioController - radio_crud", () => {
       name: faker.person.firstName(),
     };
 
-    const response2 = await apiClient()
+    await apiClient()
       .put(`/radio/${radio.id}1`)
       .send(newRadio)
       .set("Authorization", `Bearer ${token}`)
@@ -481,7 +481,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -501,15 +501,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -525,7 +525,7 @@ describe("RadioController - radio_crud", () => {
 
     const radio = response.body[0];
 
-    const response2 = await apiClient()
+    await apiClient()
       .delete(`/radio/${radio.id}1`)
       .set("Authorization", `Bearer ${token}`)
       .expect(400);
@@ -536,7 +536,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
@@ -556,15 +556,15 @@ describe("RadioController - radio_crud", () => {
     const radios = [
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3001"
+        websiteUrl: "https://localhost:3001",
       },
       {
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3002"
+        websiteUrl: "https://localhost:3002",
       },
     ];
 
@@ -576,34 +576,36 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient()
+    await apiClient()
       .post("/radio")
       .send({
         name: faker.person.firstName(),
-   
-   websiteUrl: "https://localhost:3000"   })
+
+        websiteUrl: "https://localhost:3000",
+      })
       .expect(401);
 
     const response2 = await apiClient().get("/radio").expect(200);
 
     const radio1 = response2.body[0];
 
-    const response3 = await apiClient().get(`/radio/${radio1.id}`).expect(200);
+    await apiClient().get(`/radio/${radio1.id}`).expect(200);
 
-    const response4 = await apiClient()
+    await apiClient()
       .put(`/radio/${radio1.id}`)
       .send({
         name: faker.person.firstName(),
-   
-   websiteUrl: "https://localhost:3000"   })
+
+        websiteUrl: "https://localhost:3000",
+      })
       .expect(401);
 
-    const response5 = await apiClient()
+    await apiClient()
       .delete(`/radio/${radio1.id}`)
       .expect(401);
   });
 
-  it("should not accept some operations without Roles.Administrator role", async () => {
+  it("should not accept some operations without Role.Administrator role", async () => {
     const user = {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
@@ -629,18 +631,18 @@ describe("RadioController - radio_crud", () => {
       .post("/radio")
       .send({
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       })
       .set("Authorization", `Bearer ${token}`)
       .expect(403);
 
-    const response2 = await apiClient().get("/radio").expect(200);
+    await apiClient().get("/radio").expect(200);
 
     await apiClient()
       .put(`/radio/null`)
       .send({
         name: faker.person.firstName(),
-        websiteUrl: "https://localhost:3000"
+        websiteUrl: "https://localhost:3000",
       })
       .set("Authorization", `Bearer ${token}`)
       .expect(403);
@@ -656,7 +658,7 @@ describe("RadioController - radio_crud", () => {
       nickname: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      roles: [Roles.Administrator],
+      roles: [Role.Administrator],
     };
 
     await userModel.create({
