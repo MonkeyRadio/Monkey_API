@@ -22,11 +22,11 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import { MustBe } from "@/decorators/roles.decorator";
-import { Roles } from "@/constants/roles";
 import { AuthGuard } from "@/guards/auth.guard";
 import { RoleGuard } from "@/guards/role.guard";
 import { RadioDto } from "./dto/radio.dto";
 import { Request as ExpressRequest } from "express";
+import { Role } from "@/enums/Role.enum";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("radio")
@@ -38,7 +38,7 @@ export class RadioController {
     description: "The record has been successfully created.",
     type: RadioDto,
   })
-  @MustBe(Roles.Administrator)
+  @MustBe(Role.Administrator)
   @UseGuards(AuthGuard, RoleGuard)
   @HttpCode(201)
   @Post()
@@ -78,7 +78,7 @@ export class RadioController {
     description: "The record has been successfully updated.",
     type: RadioDto,
   })
-  @MustBe(Roles.Administrator)
+  @MustBe(Role.Administrator)
   @UseGuards(AuthGuard, RoleGuard)
   @Put(":id")
   @HttpCode(202)
@@ -90,7 +90,7 @@ export class RadioController {
     description: "The record has been successfully deleted.",
     type: RadioDto,
   })
-  @MustBe(Roles.Administrator)
+  @MustBe(Role.Administrator)
   @UseGuards(AuthGuard, RoleGuard)
   @Delete(":id")
   @HttpCode(202)
