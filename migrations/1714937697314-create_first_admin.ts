@@ -20,6 +20,7 @@ export async function up(): Promise<void> {
       email: "admin@local.com",
       password: randomPass,
       roles: ["administrator"],
+      scopes: ["*"],
     });
     await admin.save();
     console.log(`Admin user created with password: ${randomPass}`);

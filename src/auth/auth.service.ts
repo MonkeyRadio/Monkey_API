@@ -100,12 +100,12 @@ export class AuthService {
 
   async accredit(
     request: RequestAuthenticated,
-    scope: UserScope,
-    role: Role,
+    scope: string,
+    role: string,
   ): Promise<boolean> {
     return (
-      request.user.roles.includes(role) &&
-      (request.user.scopes.includes(scope) ||
+      request.user.roles.includes(<Role>role) &&
+      (request.user.scopes.includes(<UserScope>scope) ||
         request.user.scopes.includes(UserScope.ALL))
     );
   }

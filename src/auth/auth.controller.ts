@@ -13,7 +13,7 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { RegisterDto } from "@/src/auth/dto";
+import { AccreditDto, RegisterDto} from "@/src/auth/dto";
 import { LoginDto } from "@/src/auth/dto";
 import { AuthGuard } from "@/guards/auth.guard";
 import { AuthExpiredGuard } from "@/guards/authExpired.guard";
@@ -93,12 +93,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async accreditations(
     @Request() req: RequestAuthenticated,
-    @Body("scope") scope: UserScope,
-    @Body("role") role: Role,
+    @Body() accredit: AccreditDto,
   ) {
-    if (!role) throw new BadRequestException("Invalid role");
-    if (!scope) throw new BadRequestException("Invalid scope");
-    if (await this.authService.accredit(req, scope, role)) return;
+    if (!accredit.role) throw new BadRequestException("Invalid role");
+    if (!accredit.scope) throw new BadRequestException("Invalid scope");
+    if (await this.authService.accredit(req, accredit.scope, accredit.role)) return;
     throw new UnauthorizedException("Unauthorized");
   }
 }
