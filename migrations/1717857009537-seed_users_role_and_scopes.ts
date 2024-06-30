@@ -1,6 +1,6 @@
-import { Role } from "@/enums/Role.enum";
-import { UserScope } from "@/enums/UserScope.enum";
-import getModels from "@/schemas";
+import { Role } from "../enums/Role.enum";
+import { UserScope } from "../enums/UserScope.enum";
+import getModels from "../schemas";
 
 export async function up(): Promise<void> {
   const { UserModel } = await getModels();
