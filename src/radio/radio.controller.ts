@@ -11,6 +11,7 @@ import {
   HttpCode,
   Put,
   Request,
+  NotFoundException,
 } from "@nestjs/common";
 import { RadioService } from "./radio.service";
 import { CreateRadioDto } from "./dto/create-radio.dto";
@@ -27,6 +28,8 @@ import { RoleGuard } from "@/guards/role.guard";
 import { RadioDto } from "./dto/radio.dto";
 import { Request as ExpressRequest } from "express";
 import { Role } from "@/enums/Role.enum";
+import { UserRequest } from "@/decorators/user-request.decorator";
+import { UserAuthenticated } from "@/types/UserRequest";
 
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("radio")
@@ -47,13 +50,14 @@ export class RadioController {
   }
 
   @ApiOkResponse({
-    description: "All records have been successfully retrieved.",
+    description: "Get all radios that user has access to.",
     type: RadioDto,
     isArray: true,
   })
+  @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.radioService.findAll();
+  findAll(@UserRequest() user: UserAuthenticated) {
+    return this.radioService.findAll(user.scopes);
   }
 
   @ApiOkResponse({
@@ -69,8 +73,11 @@ export class RadioController {
     description: "The record has been successfully retrieved.",
     type: RadioDto,
   })
+  @UseGuards(AuthGuard)
   @Get(":id")
-  findOne(@Param("id") id: string) {
+  findOne(@UserRequest() user: UserAuthenticated, @Param("id") id: string) {
+    if (!user.scopes?.includes(id) && !user.scopes?.includes("*"))
+      throw new NotFoundException("Radio not found");
     return this.radioService.findOne(id);
   }
 

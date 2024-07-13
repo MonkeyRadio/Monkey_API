@@ -2,7 +2,6 @@ import { Exclude, Expose, Transform } from "class-transformer";
 import { Dto } from "@/utils/DtoClass";
 import { ApiProperty } from "@nestjs/swagger";
 import { Role } from "@/enums/Role.enum";
-import { UserScope } from "@/enums/UserScope.enum";
 
 @Exclude()
 export class UserDto extends Dto {
@@ -25,5 +24,5 @@ export class UserDto extends Dto {
 
   @ApiProperty({ description: "User scopes" })
   @Expose()
-  scopes: UserScope[];
+  scopes: string[];
 }
