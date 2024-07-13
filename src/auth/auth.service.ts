@@ -24,8 +24,6 @@ import {
   IncrementFamily,
 } from "@/services/FamilyBasedAuth";
 import { RequestAuthenticated } from "@/types/RequestAuthenticated";
-import { UserScope } from "@/enums/UserScope.enum";
-import { Role } from "@/enums/Role.enum";
 
 @Injectable()
 export class AuthService {
@@ -96,17 +94,5 @@ export class AuthService {
 
   async me(request: RequestAuthenticated): Promise<UserDto> {
     return new UserDto(request.user);
-  }
-
-  async accredit(
-    request: RequestAuthenticated,
-    scope: string,
-    role: string,
-  ): Promise<boolean> {
-    return (
-      request.user.roles.includes(<Role>role) &&
-      (request.user.scopes.includes(<UserScope>scope) ||
-        request.user.scopes.includes(UserScope.ALL))
-    );
   }
 }

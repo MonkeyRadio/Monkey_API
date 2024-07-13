@@ -26,8 +26,13 @@ export class RadioService {
     }
   }
 
-  async findAll() {
-    const radios = await this.radioModel.find();
+  async findAll(ids?: string[]) {
+    if (!ids) ids = ["*"];
+    const query = ids.includes("*")
+      ? {}
+      : { _id: { $in: ids?.filter((id) => id.match(/^[0-9a-fA-F]{24}$/)) } };
+
+    const radios = await this.radioModel.find(query);
 
     return radios.map((radio) => new RadioDto(radio.toObject()));
   }

@@ -15,7 +15,8 @@
     "start:prod": "npx migrate up -a true && node dist/src/main.js",
     "lint": "eslint \"**/*.ts\"",
     "lint:report": "eslint --output-file eslint_report.json --format json \"**/*.ts\"",
-    "test": "jest"
+    "test": "jest",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

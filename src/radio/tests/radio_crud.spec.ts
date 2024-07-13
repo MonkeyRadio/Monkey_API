@@ -83,6 +83,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -120,6 +121,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -159,7 +161,10 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
+    const response = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     expect(response.body).toHaveLength(3);
   });
@@ -170,6 +175,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -209,16 +215,17 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
-
-    await apiClient()
+    const response = await apiClient()
       .get("/radio")
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
 
     const radio = response.body[0];
 
-    const response2 = await apiClient().get(`/radio/${radio.id}`).expect(200);
+    const response2 = await apiClient()
+      .get(`/radio/${radio.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     expect(response2.body).toMatchObject({
       name: expect.any(String),
@@ -232,6 +239,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -271,7 +279,10 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
+    const response = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     const radio = response.body[0];
 
@@ -290,7 +301,10 @@ describe("RadioController - radio_crud", () => {
       id: expect.any(String),
     });
 
-    const response3 = await apiClient().get(`/radio/${radio.id}`).expect(200);
+    const response3 = await apiClient()
+      .get(`/radio/${radio.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     expect(response3.body).toMatchObject({
       name: newRadio.name,
@@ -304,6 +318,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -343,7 +358,10 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
+    const response = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     const radio = response.body[0];
 
@@ -357,9 +375,15 @@ describe("RadioController - radio_crud", () => {
       id: radio.id,
     });
 
-    await apiClient().get(`/radio/${radio.id}`).expect(404);
+    await apiClient()
+      .get(`/radio/${radio.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(404);
 
-    const response4 = await apiClient().get("/radio").expect(200);
+    const response4 = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     expect(response4.body).toHaveLength(2);
   });
@@ -370,6 +394,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -409,11 +434,17 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
+    const response = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     const radio = response.body[0];
 
-    await apiClient().get(`/radio/${radio.id}1`).expect(404);
+    await apiClient()
+      .get(`/radio/${radio.id}1`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(404);
   });
 
   it("should create some radios and update one of them with a wrong id", async () => {
@@ -422,6 +453,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -461,7 +493,10 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
+    const response = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     const radio = response.body[0];
 
@@ -482,6 +517,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -521,7 +557,10 @@ describe("RadioController - radio_crud", () => {
         .expect(201);
     }
 
-    const response = await apiClient().get("/radio").expect(200);
+    const response = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     const radio = response.body[0];
 
@@ -537,6 +576,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -585,11 +625,17 @@ describe("RadioController - radio_crud", () => {
       })
       .expect(401);
 
-    const response2 = await apiClient().get("/radio").expect(200);
+    const response2 = await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     const radio1 = response2.body[0];
 
-    await apiClient().get(`/radio/${radio1.id}`).expect(200);
+    await apiClient()
+      .get(`/radio/${radio1.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     await apiClient()
       .put(`/radio/${radio1.id}`)
@@ -600,9 +646,7 @@ describe("RadioController - radio_crud", () => {
       })
       .expect(401);
 
-    await apiClient()
-      .delete(`/radio/${radio1.id}`)
-      .expect(401);
+    await apiClient().delete(`/radio/${radio1.id}`).expect(401);
   });
 
   it("should not accept some operations without Role.Administrator role", async () => {
@@ -611,6 +655,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [],
+      scopes: ["*"],
     };
 
     await userModel.create({
@@ -636,7 +681,10 @@ describe("RadioController - radio_crud", () => {
       .set("Authorization", `Bearer ${token}`)
       .expect(403);
 
-    await apiClient().get("/radio").expect(200);
+    await apiClient()
+      .get("/radio")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
 
     await apiClient()
       .put(`/radio/null`)
@@ -659,6 +707,7 @@ describe("RadioController - radio_crud", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       roles: [Role.Administrator],
+      scopes: ["*"],
     };
 
     await userModel.create({
