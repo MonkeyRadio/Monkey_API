@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, InternalServerErrorException } from "@nestjs/common";
 import { HealthCheckService } from "./health-check.service";
 import { HealthError } from "./health-error.error";
 
@@ -17,12 +17,12 @@ export class HealthCheckController {
         message: "OK",
       };
     } catch (error) {
-      if (error instanceof HealthError) return error.toResponse();
+      if (error instanceof HealthError) throw new InternalServerErrorException(error.toResponse());
       else
-        return {
+        throw new InternalServerErrorException({
           status: 500,
           message: error.message,
-        };
+        });
     }
   }
 }
