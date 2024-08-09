@@ -5,6 +5,7 @@ import { RedisModule } from "@songkeys/nestjs-redis";
 import { AuthModule } from "./auth/auth.module";
 import { RadioModule } from "./radio/radio.module";
 import { AppController } from "./app.controller";
+import { HealthCheckModule } from "./health-check/health-check.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AppController } from "./app.controller";
     }),
     AuthModule,
     RadioModule,
+    HealthCheckModule,
   ],
   controllers: [AppController],
 })
