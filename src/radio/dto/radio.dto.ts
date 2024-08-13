@@ -19,6 +19,29 @@ export class RadioDto extends Dto {
   websiteUrl: string;
 
   @ApiProperty({ description: "Radio live stream" })
+  @Transform(({ value }) =>
+    value.map((v: DiffusionLink) => {
+      let extension = "m3u8";
+      switch (v.containerType) {
+        case "hls":
+          extension = ".m3u8";
+          break;
+        case "llhls":
+          extension = ".m3u8";
+          break;
+        case "dash":
+          extension = ".mpd";
+          break;
+        default:
+          extension = "";
+          break;
+      }
+      return {
+        ...v,
+        diffusionLink: `${v.name}${extension}`,
+      };
+    }),
+  )
   @Expose()
   liveStream: DiffusionLink[];
 
