@@ -6,6 +6,8 @@ import { AuthModule } from "./auth/auth.module";
 import { RadioModule } from "./radio/radio.module";
 import { AppController } from "./app.controller";
 import { HealthCheckModule } from "./health-check/health-check.module";
+import { CoverModule } from "./cover/cover.module";
+import { SharedModule } from "./shared/shared.module";
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { HealthCheckModule } from "./health-check/health-check.module";
     AuthModule,
     RadioModule,
     HealthCheckModule,
+    CoverModule,
+    SharedModule,
   ],
   controllers: [AppController],
 })

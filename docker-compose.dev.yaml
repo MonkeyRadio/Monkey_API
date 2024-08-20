@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   cache:
@@ -37,12 +35,27 @@ services:
     networks:
       - api
     volumes:
-      - .:/app
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/app
     command: npm run start:dev
+
+  s3:
+    image: quay.io/minio/minio
+    container_name: minio
+    restart: always
+    ports:
+      - "${EXPOSED_S3_PORT}:9000"
+    volumes:
+      - minio_data:/data
+    networks:
+      - api
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server /data
 
 networks:
   api:
 
 volumes:
   mongo_data:
+  minio_data:

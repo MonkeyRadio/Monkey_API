@@ -17,7 +17,8 @@ export class HealthCheckController {
         message: "OK",
       };
     } catch (error) {
-      if (error instanceof HealthError) throw new InternalServerErrorException(error.toResponse());
+      if (error instanceof HealthError)
+        throw new InternalServerErrorException(error.toResponse());
       else
         throw new InternalServerErrorException({
           status: 500,
