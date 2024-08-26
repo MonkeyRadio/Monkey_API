@@ -14,7 +14,7 @@ env:
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
   build-and-push-image:
-    runs-on: pve-fsn1-monkey-runner-0
+    runs-on: self-hosted
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
@@ -49,7 +49,7 @@ jobs:
   trigger_deployment:
     name: Trigger the deployment in portainer
     needs: build-and-push-image
-    runs-on: pve-fsn1-monkey-runner-0
+    runs-on: self-hosted
 
     steps:
     - name: Get Webhook Secret
