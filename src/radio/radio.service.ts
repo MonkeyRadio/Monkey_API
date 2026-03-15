@@ -61,14 +61,12 @@ export class RadioService {
 
   async update(id: string, updateRadioDto: UpdateRadioDto) {
     try {
-      console.log(id);
       const radio = await this.radioModel.findByIdAndUpdate(id, updateRadioDto);
-      console.log(radio);
       return new RadioDto(
         (await this.radioModel.findById(radio.id)).toObject(),
       );
     } catch (error) {
-      throw new BadRequestException(`Radio not found ${error}`);
+      throw new BadRequestException(`Radio not found`);
     }
   }
 
