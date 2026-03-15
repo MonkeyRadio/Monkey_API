@@ -13,7 +13,7 @@ import { Request } from "express";
 
 @Injectable()
 export class RadioService {
-  constructor(@InjectModel(Radio.name) private radioModel: Model<Radio>) {}
+  constructor(@InjectModel(Radio.name) private radioModel: Model<Radio>) { }
 
   async create(createRadioDto: CreateRadioDto) {
     try {
@@ -66,7 +66,7 @@ export class RadioService {
         (await this.radioModel.findById(radio.id)).toObject(),
       );
     } catch (error) {
-      throw new BadRequestException("Radio not found");
+      throw new BadRequestException(`Radio not found ${error}`);
     }
   }
 
