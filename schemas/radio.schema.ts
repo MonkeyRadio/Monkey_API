@@ -17,6 +17,12 @@ export class Radio {
 
   @Prop({ type: String })
   videoLiveUrl: string;
+
+  @Prop({ type: String })
+  picture: string;
+
+  @Prop({ type: String })
+  headline: string;
 }
 
 export const RadioSchema = SchemaFactory.createForClass(Radio);
